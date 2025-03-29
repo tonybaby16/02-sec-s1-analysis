@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEC S-1 Filing Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .chart-container {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .data-table {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">SEC S-1 Filing Analysis</h1>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="chart-container">
+                    <h3 class="text-center mb-4">Monthly Filings (1994-2025)</h3>
+                    <img src="assets/images/s1_filings_chart.png" alt="S-1 Filings Chart" class="img-fluid">
+                </div>
+                
+                <div class="data-table">
+                    <h3 class="text-center mb-4">Raw Data updated daily</h3>
+                    <div id="table-container"></div>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <p class="text-muted">Data last updated: <span id="update-date"></span></p>
+                    <p>Source: Bulk data from <a href="https://www.sec.gov/search-filings/edgar-application-programming-interfaces" target="_blank">SEC EDGAR</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+        // Load and display the data table
+        Papa.parse("assets/data/monthly_counts.csv", {
+            download: true,
+            header: true,
+            complete: function(results) {
+                let html = '<table class="table table-striped table-bordered"><thead><tr>';
+                
+                // Create header
+                results.meta.fields.forEach(field => {
+                    html += `<th>${field}</th>`;
+                });
+                html += '</tr></thead><tbody>';
+                
+                // Create rows
+                results.data.forEach(row => {
+                    html += '<tr>';
+                    results.meta.fields.forEach(field => {
+                        html += `<td>${row[field] || ''}</td>`;
+                    });
+                    html += '</tr>';
+                });
+                
+                html += '</tbody></table>';
+                document.getElementById('table-container').innerHTML = html;
+            }
+        });
+        
+        // Display current date
+        document.getElementById('update-date').textContent = new Date().toLocaleString();
+    </script>
+</body>
+</html>
