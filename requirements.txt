@@ -14,3 +14,4 @@ python-dateutil>=2.8.0  # Date handling
 # Development/testing
 pytest>=6.2.0  # Unit testing
 pytest-cov>=2.8.0  # Test coverage
+python-dotenv>=1.0.0
