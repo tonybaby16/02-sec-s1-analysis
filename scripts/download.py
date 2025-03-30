@@ -16,9 +16,6 @@ def download_submissions():
     headers = {"User-Agent": f"tonybaby16 {email}"}  # Updated User-Agent
     
     try:
-        response = requests.get(SEC_URL, headers=headers, timeout=30)
-    
-    try:
         print(f"Downloading SEC data at {datetime.utcnow().isoformat()}")
         response = requests.get(SEC_URL, headers=headers, timeout=30)
         response.raise_for_status()
