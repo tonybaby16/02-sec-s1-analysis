@@ -5,6 +5,9 @@ on:
     - cron: '0 12 * * *'  # Runs at 12:00 PM UTC daily
   workflow_dispatch:  # Allows manual triggering via GitHub UI
 
+permissions:
+  contents: write  # Required for pushing
+
 jobs:
   update-data:  # ID for this job
     runs-on: ubuntu-latest  # GitHub-hosted Linux machine
@@ -36,10 +39,13 @@ jobs:
         python visualize.py
         
     # Commit results back to repo
+    #removed #docs/assets/data/*
     - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git add docs/assets/data/* docs/assets/images/*
+        git add docs/assets/images/*
         git commit -m "Automated data update $(date +'%Y-%m-%d')" || echo "No changes to commit"
         git push
