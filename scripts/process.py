@@ -9,7 +9,7 @@ def process_filings():
     processed_files = 0
     skipped_files = 0
 
-    for filepath in glob.glob("../data/CIK*.json"):
+    for filepath in glob.glob("data/CIK*.json"):
         try:
             with open(filepath, 'r') as f:
                 data = json.load(f)
@@ -40,7 +40,7 @@ def process_filings():
                 processed_files += 1
                 
         except Exception as e:
-            print(f"Skipping {filepath} due to error: {str(e)}")
+            #print(f"Skipping {filepath} due to error: {str(e)}")
             skipped_files += 1
             continue
 
@@ -87,5 +87,16 @@ def process_filings():
     
     return df
 
+#if __name__ == "__main__":
+ #   process_filings()
+def main():
+    try:
+        process_filings()
+        return True
+    except Exception as e:
+        print(f"Processing failed: {e}")
+        return False
+
 if __name__ == "__main__":
-    process_filings()
+    if not main():
+        exit(1)  # Fail the GitHub Action if processing fails

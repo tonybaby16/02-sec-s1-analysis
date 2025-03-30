@@ -1,0 +1,45 @@
+name: Daily SEC Data Update  # Friendly name for your workflow
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Runs at 12:00 PM UTC daily
+  workflow_dispatch:  # Allows manual triggering via GitHub UI
+
+jobs:
+  update-data:  # ID for this job
+    runs-on: ubuntu-latest  # GitHub-hosted Linux machine
+    
+    steps:
+    # Checkout your code
+    - uses: actions/checkout@v4
+    
+    # Set up Python environment
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'  # Matches your local version
+    
+    # Install dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    # Run your scripts
+    - name: Run data pipeline
+      env:
+        SEC_EMAIL: ${{ secrets.SEC_EMAIL }}  # Pass the secret as environment variable
+      run: |
+        cd scripts
+        python download.py
+        python process.py
+        python visualize.py
+        
+    # Commit results back to repo
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add docs/assets/data/* docs/assets/images/*
+        git commit -m "Automated data update $(date +'%Y-%m-%d')" || echo "No changes to commit"
+        git push
