@@ -1,8 +1,9 @@
 # SEC S-1 Filing Analysis
+See the chart at https://tonybaby16.github.io/02-sec-s1-analysis/
 
 ![S-1 Filings Visualization]
 
-A data analysis project that tracks S-1 filing trends with the U.S. Securities and Exchange Commission (SEC) from 1994 to present.
+A data analysis project that tracks S-1 filing trends with the U.S. Securities and Exchange Commission (SEC) from 1994 to present. Data updates daily at 8 am ET.
 
 ## Features
 
@@ -19,5 +20,4 @@ A data analysis project that tracks S-1 filing trends with the U.S. Securities a
     B --> C(Extract CIK JSONs)
     C --> D(Process Filings)
     D --> E[Monthly Counts CSV]
-    D --> F[Company Stats CSV]
-    E --> G(Visualize)
+    E --> F(Visualize)
