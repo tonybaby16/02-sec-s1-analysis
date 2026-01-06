@@ -14,9 +14,9 @@ def generate_chart():
     years = [col for col in df.columns if col.isdigit()]
     years = sorted(years, key=int)
     
-    # Calculate historical average (1994-2023)
-    historical_years = [str(y) for y in range(1994, 2024) if str(y) in df.columns]
-    df['1994-2023 Avg'] = df[historical_years].mean(axis=1)
+    # Calculate historical average (1994-2024)
+    historical_years = [str(y) for y in range(1994, 2025) if str(y) in df.columns]
+    df['1994-2024 Avg'] = df[historical_years].mean(axis=1)
     
     # Create figure
     plt.figure(figsize=(14, 7))
@@ -27,7 +27,7 @@ def generate_chart():
     line_colors = ['#2ca02c', '#d62728']   # Green for 2024, Red for 2025
     
     # Plot historical average (thick dashed line)
-    plt.plot(df.index, df['1994-2023 Avg'], 
+    plt.plot(df.index, df['1994-2024 Avg'], 
             color=avg_color, 
             linestyle='--', 
             linewidth=2.5,
@@ -36,7 +36,7 @@ def generate_chart():
     
     # Plot current years as bars
     bar_width = 0.35
-    for i, year in enumerate(['2024', '2025']):
+    for i, year in enumerate(['2025', '2026']):
         if year in df.columns:
             offset = bar_width * i
             plt.bar(df.index + offset, df[year], 
@@ -57,7 +57,7 @@ def generate_chart():
     plt.xlim(0.5, 12.5)
     
     # Y-axis settings
-    max_value = max(df[[ '2024', '2025']].max().max(), df['1994-2023 Avg'].max())
+    max_value = max(df[[ '2025', '2026']].max().max(), df['1994-2024 Avg'].max())
     plt.ylim(0, max_value * 1.15)
     plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
     
@@ -67,8 +67,8 @@ def generate_chart():
     
     # Annotate the historical average line
     for month in df.index:
-        plt.annotate(f"{df.loc[month, '1994-2023 Avg']:.1f}", 
-                    (month, df.loc[month, '1994-2023 Avg']),
+        plt.annotate(f"{df.loc[month, '1994-2024 Avg']:.1f}", 
+                    (month, df.loc[month, '1994-2024 Avg']),
                     textcoords="offset points",
                     xytext=(0,5),
                     ha='center',
@@ -85,7 +85,7 @@ def generate_chart():
     plt.close()
     
     print(f"Chart generated successfully at {output_path}")
-    print(f"Historical average calculated from {len(historical_years)} years (1994-2023)")
+    print(f"Historical average calculated from {len(historical_years)} years (1994-2024)")
 
 if __name__ == "__main__":
     generate_chart()
