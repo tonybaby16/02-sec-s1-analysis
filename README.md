@@ -7,9 +7,9 @@ A data analysis project that tracks S-1 filing trends with the U.S. Securities a
 
 ## Features
 
-- **Historical Trends**: Compares current filing activity against 1994-2021 monthly averages
+- **Historical Trends**: Compares current filing activity against 1994-previous_year's monthly averages
 - **Recent Analysis**: 
-  - Bar charts for current year (2024-2025) filings
+  - Bar charts for current and previous year filings
 - **Key Metrics**:
   - Monthly filing counts
   - Year-over-year comparisons
